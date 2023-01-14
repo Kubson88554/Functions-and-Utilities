@@ -57,6 +57,6 @@ return normal,dot(normal,invert(a))
 end
 function intersect(a,b,normal,d)
 local ab=subt(b,a)
-local t= (-(d+dot(normal,a)))/dot(normal,ab)
+local t=(-(d+dot(normal,a)))/dot(normal,ab)
 return vec(a.x+ab.x*t,a.y+ab.y*t,a.z+ab.z*t)
 end
