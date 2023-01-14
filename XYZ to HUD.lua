@@ -34,7 +34,7 @@ end
 function cross(a,b)
 return vec(a.y*b.z-a.z*b.y, a.z*b.x-a.x*b.z, a.x*b.y-a.y*b.x)
 end
-function stoc(d,hor,ver)
+function stoc(hor,ver,d)
 local d=d or 1
 return vec(m.sin(hor)*m.cos(ver)*d, m.cos(hor)*m.cos(ver)*d, m.sin(ver)*d)
 end
@@ -45,7 +45,7 @@ function torelative(a,r,f,u)
 return add(add(multf(r,a.x), multf(f,a.y)), multf(u,a.z))
 end
 function p3toplane(a,b,c)
-local normal=cross(subt(c,a),subt(b,a))
+local normal=norm(cross(subt(c,a),subt(b,a)))
 return normal,dot(normal,invert(a))
 end
 function intersect(a,b,normal,d)
@@ -64,32 +64,46 @@ HUDp3=vec(pgn("HUD 3 X"),pgn("HUD 3 Y"),pgn("HUD 3 Z"))
 HUDnormal,d=p3toplane(HUDp1,HUDp2,HUDp3)
 inHUD,intsct = false, vec()
 
-altoffset=vec(pgn("Alt X"),pgn("Alt Y"),pgn("Alt Z"))
+headorigin=vec(pgn("HEAD X"),pgn("HEAD Y"),pgn("HEAD Z"))
+
+altoffset=vec(pgn("ALT X"),pgn("ALT Y"),pgn("ALT Z"))
 
 function onTick()
 	
-	compf,tiltf,compr,tiltr=ign(7)*-pi2,ign(8)*pi2,ign(9)*-pi2,ign(10)*pi2
-	right,fwd,up=stoc(compr,tiltr),stoc(compf,tiltf),cross(right,fwd)
+	compf=ign(7)*-pi2;tiltf=ign(8)*pi2;compr=ign(9)*-pi2;tiltr=ign(10)*pi2
+	right=stoc(compr,tiltr)
+	fwd=stoc(compf,tiltf)
+	up=cross(right,fwd)
 	
 	tgtpos = vec(ign(1),ign(2),ign(3))
+	detected = length(tgtpos)>0
 	gpspos = vec(ign(4),ign(5),ign(6)-(torelative(altoffset,right,fwd,up).z))
 	lookX,lookY = ign(11),ign(12)
 	
 	headazim = clamp(lookX, -0.277, 0.277) * 0.408 * pi2
 	headelev =  clamp(lookY, -0.125, 0.125) * 0.9 * pi2 + 0.404 + m.abs(headazim/0.7101) * 0.122
 	distance = m.cos(headazim) * 0.1523
-	headpos = vec(m.sin(headazim)*0.1523, m.cos(headelev)*distance+0.061, m.sin(headelev)*distance-0.023)
+	headoffset = vec(m.sin(headazim)*0.1523, m.cos(headelev)*distance+0.161, m.sin(headelev)*distance-0.023)
+	headpos = add(headorigin,headoffset)
 	
 	reltgtpos = subt(tgtpos,gpspos)
 	localtgtpos = tolocal(reltgtpos,right,fwd,up)
+	headtgtpos = subt(localtgtpos,headpos)
 	
-	if dot(HUDnormal,localtgtpos) > 0 then
+	if dot(HUDnormal,headtgtpos) > 0 and detected then
 		inHUD = true
 		intsct = intersect(headpos,localtgtpos,HUDnormal,d)
-		HUDright,HUDfwd = subt(HUDp3,HUDp1), subt(HUDp2,HUDp1)
-		HUDintsct = divf(tolocal(subt(intsct,HUDp1),HUDright,HUDfwd,HUDnormal),128)
+		HUDfwd,HUDright=norm(subt(HUDp2,HUDp1)),norm(subt(HUDp3,HUDp1))
+		HUDintsct = multf(tolocal(subt(intsct,HUDp1),HUDright,HUDfwd,HUDnormal),128)
 	else
 		inHUD = false
 	end
 
+end
+
+function onDraw()
+	if inHUD then
+		screen.setColor(0, 255, 0)
+		screen.drawCircle(HUDintsct.x-1, HUDintsct.y+1, 1)
+	end
 end
