@@ -60,3 +60,12 @@ local ab=subt(b,a)
 local t=(-(d+dot(normal,a)))/dot(normal,ab)
 return vec(a.x+ab.x*t,a.y+ab.y*t,a.z+ab.z*t)
 end
+
+compf = ign(7) * -pi2
+tiltf = ign(8) * pi2
+compr = ign(9) * -pi2
+tiltr = ign(10) * pi2
+
+right=stoc(compr,tiltr)
+fwd=stoc(compf,tiltf)
+up=cross(right,fwd)
