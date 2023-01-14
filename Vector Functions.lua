@@ -51,3 +51,12 @@ end
 function tospherical(a)
 return length(a),m.atan(a.y,a.x),m.asin(a.z/length(a))
 end
+function p3toplane(a,b,c)
+local normal=cross(subt(c,a),subt(b,a))
+return normal,dot(normal,invert(a))
+end
+function intersect(a,b,normal,d)
+local ab=subt(b,a)
+local t= (-(d+dot(normal,a)))/dot(normal,ab)
+return vec(a.x+ab.x*t,a.y+ab.y*t,a.z+ab.z*t)
+end
