@@ -83,7 +83,7 @@ function onTick()
 	headazim = clamp(lookX, -0.277, 0.277) * 0.408 * pi2
 	headelev =  clamp(lookY, -0.125, 0.125) * 0.9 * pi2 + 0.404 + m.abs(headazim/0.7101) * 0.122
 	distance = m.cos(headazim) * 0.1523
-	headoffset = vec(m.sin(headazim)*0.1523, m.cos(headelev)*distance+0.161, m.sin(headelev)*distance-0.023)
+	headoffset = vec(m.sin(headazim)*0.1523, m.cos(headelev)*distance+0.096, m.sin(headelev)*distance-0.023)
 	headpos = add(headorigin,headoffset)
 	
 	reltgtpos = subt(tgtpos,gpspos)
@@ -104,6 +104,6 @@ end
 function onDraw()
 	if inHUD then
 		screen.setColor(0, 255, 0)
-		screen.drawCircle(HUDintsct.x-1, HUDintsct.y+1, 1)
+		screen.drawRect((HUDintsct.x-1)-3, (HUDintsct.y+1)-3, 6, 6)
 	end
 end
