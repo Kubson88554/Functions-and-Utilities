@@ -78,19 +78,18 @@ debug.log("VECTOR ".. name .." COMPONENTS:")debug.log(v.x)debug.log(v.y)debug.lo
 end
 function toHUD(HUDp1,HUDp2,HUDp3,p1,p2) --calculates intersection point display on HUD
 local HUDfwd,HUDright=norm(subt(HUDp2,HUDp1)),norm(subt(HUDp3,HUDp1))
-local HUDnormal=cross(HUDright,HUDfwd)
-local d=dot(HUDnormal,invert(HUDp1))
-local intsct = intersect(p1,p2,HUDnormal,d)
+local intsct=intersect(p1,p2,norm(cross(HUDright,HUDfwd)),dot(HUDnormal,invert(HUDp1)))
 return multf(tolocal(subt(intsct,HUDp1),HUDright,HUDfwd,HUDnormal),128)
 end
 function tomonitor(p,cam,zoom,w,h) --calculates point display on monitor
-local center_x = w/2; local center_y = h/2
-local aspect = (center_x - 128 * border) / (center_y - 128 * border)
-local fov_y = m.tan(fov/2); local fov_x = fov_y * aspect
-local pcam = subt(p,cam)
-local pixel_x = pcam.y > 0 and center_x * (1 + pcam.x / pcam.y / fov_x) or 0
-local pixel_y = pcam.y > 0 and center_y * (1 + pcam.z / pcam.y / fov_y) or 0
-return pixel_x, pixel_y
+local fov=zoom*(0.025-2.2)+2.2
+local center_x=w/2; local center_y=h/2
+local aspect=(center_x 128*border)/(center_y-128*border)
+local fov_y=m.tan(fov/2); local fov_x=fov_y*aspect
+local pcam=subt(p,cam)
+local pixel_x=pcam.y>0 and center_x*(1+pcam.x/pcam.y/fov_x) or 0
+local pixel_y=pcam.y>0 and center_y*(1+pcam.z/pcam.y/fov_y) or 0
+return pixel_x,pixel_y
 end
 
 --compass and tilt to facing vectors
