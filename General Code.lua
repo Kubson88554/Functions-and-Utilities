@@ -1,6 +1,7 @@
 ign = input.getNumber; osn = output.setNumber; igb = input.getBool; osb = output.setBool;
 pgn = property.getNumber; pgb = property.getBool; pgt = property.getText; m = math; pi = m.pi; pi2 = pi*2
 
+--Basic Functions
 function vec(x,y,z) --defines a vector
 return {x=x or 0,y=y or 0,z=z or 0}
 end
@@ -44,6 +45,8 @@ function stoc(hor,ver,d) --spherical to cartesian conversion
 local d=d or 1
 return vec(m.sin(hor)*m.cos(ver)*d, m.cos(hor)*m.cos(ver)*d, m.sin(ver)*d)
 end
+
+--Advanced Functions
 function tolocal(a,r,f,u) --converts a vector to local frame of reference
 return vec(dot(r,a),dot(f,a),dot(u,a))
 end
