@@ -84,7 +84,7 @@ end
 function tomonitor(p,cam,zoom,w,h) --calculates point display on monitor
 local fov=zoom*(0.025-2.2)+2.2
 local center_x=w/2; local center_y=h/2
-local aspect=(center_x 128*border)/(center_y-128*border)
+local aspect=(center_x-128*border)/(center_y-128*border)
 local fov_y=m.tan(fov/2); local fov_x=fov_y*aspect
 local pcam=subt(p,cam)
 local pixel_x=pcam.y>0 and center_x*(1+pcam.x/pcam.y/fov_x) or 0
