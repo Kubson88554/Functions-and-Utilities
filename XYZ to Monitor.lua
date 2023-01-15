@@ -15,5 +15,4 @@ campoint = vec(dot(los,right),dot(los,fwd),dot(los,up))
 if campoint.y > 0 then
 	pixel_x = center_x * (1 + campoint.x / campoint.y / fov_x)
 	pixel_y = center_y * (1 + campoint.z / campoint.y / fov_y)
-    end
 end
