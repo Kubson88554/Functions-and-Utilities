@@ -65,7 +65,7 @@ local ab=subt(p2,p1)
 local t=(-(d+dot(normal,p1)))/dot(normal,ab)
 return vec(p1.x+ab.x*t,p1.y+ab.y*t,p1.z+ab.z*t)
 end
-function intersect3p(p1,p2,p3,v1,v2,bound)  --calculates intersection point of line made between 2 vectors through a plane (3 point plane)
+function intersect3p(p1,p2,p3,v1,v2)  --calculates intersection point of line made between 2 vectors through a plane (3 point plane)
 local normal=cross(norm(subt(p3,p1)),norm(subt(p2,p1)))
 local d=dot(normal,invert(p1))
 local ab=subt(p2,p1)
