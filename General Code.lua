@@ -71,7 +71,7 @@ function seatheadpos(lookX,lookY,headorigin) --calculates head position
 local azimuth=clamp(lookX,-0.277,0.277)*0.408*pi2
 local elevation=clamp(lookY,-0.125,0.125)*0.9*pi2+0.404+m.abs(azimuth/0.7101)*0.122
 local distance = m.cos(azimuth)*0.1523
-return vec(m.sin(azimuth)*0.1523,m.cos(elevation)*distance+0.1,m.sin(elevation)*distance-0.023)
+return add(vec(m.sin(azimuth)*0.1523,m.cos(elevation)*distance+0.1,m.sin(elevation)*distance-0.023),headorigin)
 end
 function debugvec(v,name) --sends components of a vector to debug
 debug.log("VECTOR ".. name .." COMPONENTS:")debug.log(v.x)debug.log(v.y)debug.log(v.z)debug.log("------------------")
@@ -79,7 +79,7 @@ end
 function toHUD(HUDp1,HUDp2,HUDp3,p1,p2) --calculates intersection point display on HUD
 local HUDfwd,HUDright=norm(subt(HUDp2,HUDp1)),norm(subt(HUDp3,HUDp1))
 local intsct=intersect(p1,p2,norm(cross(HUDright,HUDfwd)),dot(HUDnormal,invert(HUDp1)))
-local pixel = multf(tolocal(subt(intsct,HUDp1),HUDright,HUDfwd,HUDnormal),128)
+local pixel = add(multf(tolocal(subt(intsct,HUDp1),HUDright,HUDfwd,HUDnormal),128),vec(-1,1,0))
 return pixel.x,pixel.y
 end
 function tomonitor(p,cam,zoom,w,h) --calculates point display on monitor
