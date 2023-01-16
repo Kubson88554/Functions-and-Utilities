@@ -71,7 +71,7 @@ function seatheadpos(lookX,lookY,headorigin) --calculates head position
 local azimuth=clamp(lookX,-0.277,0.277)*0.408*pi2
 local elevation=clamp(lookY,-0.125,0.125)*0.9*pi2+0.404+m.abs(azimuth/0.7101)*0.122
 local distance = m.cos(azimuth)*0.1523
-return vec(m.sin(azimuth)*0.1523,m.cos(elevation)*distance+0.096,m.sin(elevation)*distance-0.023)
+return vec(m.sin(azimuth)*0.1523,m.cos(elevation)*distance+0.1,m.sin(elevation)*distance-0.023)
 end
 function debugvec(v,name) --sends components of a vector to debug
 debug.log("VECTOR ".. name .." COMPONENTS:")debug.log(v.x)debug.log(v.y)debug.log(v.z)debug.log("------------------")
@@ -88,7 +88,7 @@ local center_x=w/2; local center_y=h/2
 local aspect=(center_x-128*border)/(center_y-128*border)
 local fov_y=m.tan(fov/2); local fov_x=fov_y*aspect
 local pcam=subt(p,cam)
-local pixel = vec(pcam.y>0 and center_x*(1+pcam.x/pcam.y/fov_x),pcam.y>0 and center_y*(1+pcam.z/pcam.y/fov_y),0)
+local pixel=vec(pcam.y>0 and center_x*(1+pcam.x/pcam.y/fov_x),pcam.y>0 and center_y*(1+pcam.z/pcam.y/fov_y),0)
 return pixel.x,pixel.y
 end
 
