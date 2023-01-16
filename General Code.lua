@@ -60,7 +60,14 @@ function toplane(p1,p2,p3) --converts 3 points into a normal vector and distance
 local normal=cross(norm(subt(p3,p1)),norm(subt(p2,p1)))
 return normal,dot(normal,invert(p1))
 end
-function intersect(p1,p2,normal,d) --calculates intersection point of line made between 2 vectors through a plane
+function intersect(p1,p2,normal,d) --calculates intersection point of line made between 2 vectors through a plane (general equation)
+local ab=subt(p2,p1)
+local t=(-(d+dot(normal,p1)))/dot(normal,ab)
+return vec(p1.x+ab.x*t,p1.y+ab.y*t,p1.z+ab.z*t)
+end
+function intersect3p(p1,p2,p3,v1,v2,bound)  --calculates intersection point of line made between 2 vectors through a plane (3 point plane)
+local normal=cross(norm(subt(p3,p1)),norm(subt(p2,p1)))
+local d=dot(normal,invert(p1))
 local ab=subt(p2,p1)
 local t=(-(d+dot(normal,p1)))/dot(normal,ab)
 return vec(p1.x+ab.x*t,p1.y+ab.y*t,p1.z+ab.z*t)
@@ -79,8 +86,9 @@ end
 function toHUD(HUDp1,HUDp2,HUDp3,p1,p2) --calculates intersection point display on HUD
 local HUDfwd,HUDright=norm(subt(HUDp2,HUDp1)),norm(subt(HUDp3,HUDp1))
 local intsct=intersect(p1,p2,norm(cross(HUDright,HUDfwd)),dot(HUDnormal,invert(HUDp1)))
-local pixel = add(multf(tolocal(subt(intsct,HUDp1),HUDright,HUDfwd,HUDnormal),128),vec(-1,1,0))
-return pixel.x,pixel.y
+local pixel=add(multf(tolocal(subt(intsct,HUDp1),HUDright,HUDfwd,HUDnormal),128),vec(-1,1,0))
+local inHUD=return pixel.x>0 and pixel.y>0 and pixel.x<96 and y<96
+return pixel.x,pixel.y,inHUD
 end
 function tomonitor(p,cam,zoom,w,h) --calculates point display on monitor
 local fov=zoom*(0.025-2.2)+2.2
@@ -91,6 +99,10 @@ local pcam=subt(p,cam)
 local pixel=vec(pcam.y>0 and center_x*(1+pcam.x/pcam.y/fov_x),pcam.y>0 and center_y*(1+pcam.z/pcam.y/fov_y),0)
 return pixel.x,pixel.y
 end
+function bound2D(p1,p2,p3,v1,v2)
+local 
+return x > rectX and y > rectY and x < rectX+rectW and y < rectY+rectH
+local 
 
 --compass and tilt to facing vectors
 compf = ign(7) * -pi2
