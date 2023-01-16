@@ -99,10 +99,6 @@ local pcam=subt(p,cam)
 local pixel=vec(pcam.y>0 and center_x*(1+pcam.x/pcam.y/fov_x),pcam.y>0 and center_y*(1+pcam.z/pcam.y/fov_y),0)
 return pixel.x,pixel.y
 end
-function bound2D(p1,p2,p3,v1,v2)
-local 
-return x > rectX and y > rectY and x < rectX+rectW and y < rectY+rectH
-local 
 
 --compass and tilt to facing vectors
 compf = ign(7) * -pi2
