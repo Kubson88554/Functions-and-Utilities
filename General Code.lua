@@ -85,7 +85,8 @@ debug.log("VECTOR ".. name .." COMPONENTS:")debug.log(v.x)debug.log(v.y)debug.lo
 end
 function toHUD(HUDp1,HUDp2,HUDp3,p1,p2) --calculates intersection point display on HUD
 local HUDfwd,HUDright=norm(subt(HUDp2,HUDp1)),norm(subt(HUDp3,HUDp1))
-local intsct=intersect(p1,p2,norm(cross(HUDright,HUDfwd)),dot(HUDnormal,invert(HUDp1)))
+local HUDnormal=norm(cross(HUDright,HUDfwd))
+local intsct=intersect(p1,p2,HUDnormal,dot(HUDnormal,invert(HUDp1)))
 local pixel=add(multf(tolocal(subt(intsct,HUDp1),HUDright,HUDfwd,HUDnormal),128),vec(-1,1,0))
 local inHUD=return pixel.x>0 and pixel.y>0 and pixel.x<96 and y<96
 return pixel.x,pixel.y,inHUD
