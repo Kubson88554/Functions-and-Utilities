@@ -97,8 +97,8 @@ local center_x=w/2; local center_y=h/2
 local aspect=(center_x-128*0.025)/(center_y-128*0.025)
 local fov_y=m.tan(fov/2); local fov_x=fov_y*aspect
 local pcam=subt(p,cam)
-local pixel=vec(pcam.y>0 and center_x*(1+pcam.x/pcam.y/fov_x),pcam.y>0 and center_y*(1+pcam.z/pcam.y/fov_y),0)
-return pixel.x,h-pixel.y
+local pixel=vec(pcam.y>0 and center_x*(1+pcam.x/pcam.y/fov_x) or 0,pcam.y>0 and h-center_y*(1+pcam.z/pcam.y/fov_y) or 0,0)
+return pixel.x,pixel.y
 end
 
 --compass and tilt to facing vectors
