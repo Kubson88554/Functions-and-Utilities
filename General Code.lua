@@ -101,12 +101,25 @@ local pixel=vec(pcam.y>0 and center_x*(1+pcam.x/pcam.y/fov_x) or 0,pcam.y>0 and 
 return pixel.x,pixel.y
 end
 
+--physics sensor to facing vectors
+physx,physy,physz = ign(4),ign(5),ign(6)
+cx, sx = math.cos(physx), math.sin(physx)
+cy, sy = math.cos(physy), math.sin(physy)
+cz, sz = math.cos(physz), math.sin(physz)
+m00, m02 = cy*cz, sx*sz + cx*sy*cz
+m10, m12 = cy*sz, -sx*cz + cx*sy*sz
+m20, m22 = -sy, cx*cy
+tilt = {x = math.atan(m10,math.sqrt(m00^2+m20^2)) or 0, y = math.atan(m12,math.sqrt(m02^2+m22^2)) or 0}
+compass = {x = math.atan(m00,m20) or 0, y = math.atan(m02,m22) or 0}
+right = stoc(compass.x,tilt.x)
+fwd = stoc(compass.y,tilt.y)
+up = cross(right,fwd)
+
 --compass and tilt to facing vectors
 compf = ign(7) * -pi2
 tiltf = ign(8) * pi2
 compr = ign(9) * -pi2
 tiltr = ign(10) * pi2
-
 right=stoc(compr,tiltr)
 fwd=stoc(compf,tiltf)
 up=cross(right,fwd)
