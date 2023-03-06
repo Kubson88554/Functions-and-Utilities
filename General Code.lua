@@ -50,7 +50,7 @@ end
 function tolocal(a,r,f,u) --converts a vector to local frame of reference
 return vec(dot(r,a),dot(f,a),dot(u,a))
 end
-function torelative(a,r,f,u) --converts a vector to relative frame of reference
+function torelative(a,r,f,u) --converts a vector to global frame of reference, origin set at vehicle
 return add(add(multf(r,a.x), multf(f,a.y)), multf(u,a.z))
 end
 function tospherical(a) --cartesian to spherical conversion
