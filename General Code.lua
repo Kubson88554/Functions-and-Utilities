@@ -35,6 +35,9 @@ end
 function cross(a,b) --cross product between 2 vectors
 return vec(a.y*b.z-a.z*b.y, a.z*b.x-a.x*b.z, a.x*b.y-a.y*b.x)
 end
+function project(a,b) --projects a vector by another
+return multf(norm(b), dot(a, norm(b)))
+end
 function reject(a,b) --rejects a vector by another
 return subt(a, multf(norm(b), dot(a, norm(b))))
 end
