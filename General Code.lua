@@ -59,6 +59,9 @@ end
 function tospherical(a) --cartesian to spherical conversion
 return length(a),m.atan(a.y,a.x),m.asin(a.z/length(a))
 end
+function rotate(a,b,n) --rotates a vector n degrees about b vector
+return add(add(multf(a,m.cos(n)),multf((cross(b,a)),m.sin(n))),multf((multf(b,dot(b,a))),1-m.cos(n)))
+end
 function toplane(p1,p2,p3) --converts 3 points into a normal vector and distance (plane)
 local normal=cross(norm(subt(p3,p1)),norm(subt(p2,p1)))
 return normal,dot(normal,invert(p1))
