@@ -48,6 +48,17 @@ function stoc(hor,ver,d) --spherical to cartesian conversion
 local d=d or 1
 return vec(m.sin(hor)*m.cos(ver)*d, m.cos(hor)*m.cos(ver)*d, m.sin(ver)*d)
 end
+function vecDelta(a,spot) --gets delta of a vector
+  if not vecDeltaTable then
+    vecDeltaTable = {}
+    vecDeltaTable[spot] = {oldVec = vec(),deltaVec = vec()}
+  elseif not vecDeltaTable[spot] then
+    vecDeltaTable[spot] = {oldVec = vec(),deltaVec = vec()}
+  end
+    vecDeltaTable[spot].deltaVec = subt(a,vecDeltaTable[spot].oldVec)
+    vecDeltaTable[spot].oldVec = a
+  return vecDeltaTable[spot].deltaVec
+end
 
 --Advanced Functions
 function tolocal(a,r,f,u) --converts a vector to local frame of reference
