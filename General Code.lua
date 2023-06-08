@@ -129,10 +129,11 @@ right = vec(cy*cz, -sy, cy*sz)
 fwd = vec(sx*sz + cx*sy*cz, cx*cy, -sx*cz + cx*sy*sz)
 up = cross(right,fwd)
 
-angular = vec(
+angular = multf(vec(
     cy*cz*ax + cy*sz*ay + -sy*az, 
     (sx*sz + cx*sy*cz)*ax + (-sx*cz + cx*sy*sz)*ay + cx*cy*az, 
-    (-cx*sz + sx*sy*cz)*ax + (cx*cz + sx*sy*sz)*ay + sx*cy*az)
+    (-cx*sz + sx*sy*cz)*ax + (cx*cz + sx*sy*sz)*ay + sx*cy*az),
+    (pi2/60)) --Converted from turns/second to radians/tick
 
 --compass and tilt to facing vectors
 compf = ign(7) * -pi2
