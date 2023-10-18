@@ -138,7 +138,7 @@ end
 
 function to_hud(point,hud_offset,head_depth,w,h) --calculates local point display on HUD
     point_offset = subt(point,hud_offset)
-    head_pos=seatheadpos(ign(10),ign(11),vec(0,-head_depth,0))
+    head_pos=seatheadpos(ign(10),ign(11),vec(0,-head_depth+0.1,0))
     pos_x=(-head_pos.y*point_offset.x)/(point_offset.y-head_pos.y)
     pos_y=(-head_pos.y*point_offset.z)/(point_offset.y-head_pos.y)
     pixel_x=pos_x*128+w/2+head_pos.x*128
