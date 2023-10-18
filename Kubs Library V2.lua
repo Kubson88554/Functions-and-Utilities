@@ -136,14 +136,24 @@ function seatheadpos(lookX,lookY,headorigin) --calculates head position
     return add(vec(m.sin(azimuth)*0.1523,m.cos(elevation)*distance+0.161,m.sin(elevation)*distance-0.023),headorigin)
 end
 
-function tomonitor(p,cam,zoom,w,h) --calculates point display on monitor
+function to_hud(point,hud_offset,head_depth,w,h) --calculates local point display on HUD
+    point_offset = subt(point,hud_offset)
+    head_pos=seatheadpos(ign(10),ign(11),vec(0,-head_depth,0))
+    pos_x=(-head_pos.y*point_offset.x)/(point_offset.y-head_pos.y)
+    pos_y=(-head_pos.y*point_offset.z)/(point_offset.y-head_pos.y)
+    pixel_x=pos_x*128+w/2+head_pos.x*128
+    pixel_y=-pos_y*128+h/2-head_pos.z*128
+    return pixel_x,pixel_y
+end
+
+function to_monitor(point,cam,zoom,w,h) --calculates local point display on monitor
     local fov=zoom*(0.025-2.2)+2.2
     local center_x=w/2; local center_y=h/2
     local aspect=(center_x-128*0.025)/(center_y-128*0.025)
     local fov_y=m.tan(fov/2); local fov_x=fov_y*aspect
-    local pcam=subt(p,cam)
-    local pixel=vec(pcam.y>0 and center_x*(1+pcam.x/pcam.y/fov_x) or 0,pcam.y>0 and h-center_y*(1+pcam.z/pcam.y/fov_y) or 0,0)
-    return pixel.x,pixel.y
+    local pcam=subt(point,cam)
+    local pixel_x,pixel_y=pcam.y>0 and center_x*(1+pcam.x/pcam.y/fov_x) or 0, pcam.y>0 and h-center_y*(1+pcam.z/pcam.y/fov_y) or 0
+    return pixel_x,pixel_y
 end
 
 function pid(p,i,d) --PID
