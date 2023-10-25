@@ -82,7 +82,7 @@ return add(add(multf(r,a.x), multf(f,a.y)), multf(u,a.z))
 end
 
 function cart_to_spherical_yx(a) --cartesian to spherical conversion (+counter clockwise, 0 at x axis)
-    return length(a),m.atan(a.x,a.y),m.asin(a.z/length(a))
+    return length(a),m.atan(a.y,a.x),m.asin(a.z/length(a))
 end
 
 function cart_to_spherical_xy(a) --cartesian to spherical conversion (+clockwise, 0 at y axis)
