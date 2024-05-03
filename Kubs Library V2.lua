@@ -119,8 +119,8 @@ end
 
 -- PhysToYawPitchRoll (zyx)
 function phys_to_ypr(rz, ry, rx)
-    cx,cy,cz=cos(rx),cos(ry),cos(rz)
-    sx,sy,sz=sin(rx),sin(ry),sin(rz)
+    local cx,cy,cz=cos(rx),cos(ry),cos(rz)
+    local sx,sy,sz=sin(rx),sin(ry),sin(rz)
     return atan(sx*sz+cx*sy*cz, cx*cy), asin(-sx*cz+cx*sy*sz), atan(cy*sz, cx*cz+sx*sy*sz)
 end
 
