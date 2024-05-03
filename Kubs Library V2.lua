@@ -7,7 +7,7 @@ end
 
 
 -- VectorAdd
-function add(a,b) --adds 2 vectors
+function add(a,b)
     return vec(a.x+b.x, a.y+b.y, a.z+b.z)
 end
 
