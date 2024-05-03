@@ -79,8 +79,8 @@ end
 
 
 -- VectorReflect
-function ref(a,b,factor)
-    return subt(a, multf(reject(a, b), factor or 2))
+function ref(a,b,n)
+    return subt(a, multf(reject(a, b), n or 2))
 end
 
 
