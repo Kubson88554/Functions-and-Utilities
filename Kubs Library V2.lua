@@ -89,7 +89,6 @@ end
 
 -- VectorSphericalToCartesian
 function spher_to_cart(d,hor,ver)
-    local d=d or 1
     return vec(sin(hor)*cos(ver)*d, cos(hor)*cos(ver)*d, sin(ver)*d)
 end
 
