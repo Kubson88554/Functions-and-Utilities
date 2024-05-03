@@ -257,7 +257,7 @@ function pid(p,i,d)
             local E,D,A
             E = sp-pv
             D = E-s.E
-            A = math.abs(D-s.D)
+            A = abs(D-s.D)
             s.E = E
             s.D = D
             s.I = A<E and s.I +E*s.i or s.I*0.5
