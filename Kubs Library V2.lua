@@ -221,7 +221,7 @@ end
 
 
 -- PositionToHUD
-function to_hud(point,hud_pos,head_depth,w,h)
+function to_hud(point,hud_pos,head_depth,lookX,lookY,w,h)
     local point_offset = subt(point,hud_pos)
     local head_pos = seat_head_pos(lookX,lookY,vec(0,-head_depth,0))
     local pos_x = (-head_pos.y*point_offset.x)/(point_offset.y-head_pos.y)-0.0075
